@@ -18,7 +18,7 @@ const dev = {
             max: 7
         }
     },
-    port: 8080,
+    port: 3080,
     log: {
         enable: true
     },
@@ -40,7 +40,7 @@ const prod = {
             max: 7
         }
     },
-    port: 80,
+    port: 3080,
     log: {
         enable: true
     },
