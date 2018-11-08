@@ -29,3 +29,5 @@ router.put('/:shelfid', passport.authenticate('jwt', { session: false }) , (req,
 router.delete('/:shelfid', passport.authenticate('jwt', { session: false }) , (req, res) => { 
 
 })
+
+module.exports = router

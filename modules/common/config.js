@@ -5,10 +5,10 @@ const env = process.env.NODE_ENV || 'dev'
 
 const dev = {
     database: {
-        client: 'pg',
+        client: 'mysql',
         connection: {
-            host: 'localhost',
-            user: 'postgres',
+            host: '192.168.1.4',
+            user: 'root',
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             ssl: false
@@ -27,12 +27,12 @@ const dev = {
 
 const prod = {
     database: {
-        client: 'pg',
+        client: 'mysql',
         connection: {
             host: 'localhost',
-            user: 'postgres',
+            user: 'root',
             password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME || 'postgres',
+            database: process.env.DB_NAME,
             ssl: false
         },
         pool: {

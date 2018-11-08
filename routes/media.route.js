@@ -34,3 +34,5 @@ router.delete('/:mediaid', passport.authenticate('jwt', { session: false }) , (r
 router.post('/:mediaid/lending', passport.authenticate('jwt', { session: false }) , (req, res) => { 
 
 })
+
+module.exports = router
