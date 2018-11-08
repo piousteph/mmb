@@ -1,15 +1,14 @@
-CREATE TABLE login_user (
-    id BIGSERIAL NOT NULL,
+CREATE TABLE mmb_user (
+    id INTEGER NOT NULL AUTO_INCREMENT,
     name VARCHAR(128) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    password_digest VARCHAR(255) NOT NULL
-)
-
-ALTER TABLE login_user ADD CONSTRAINT login_user_pkey PRIMARY KEY (id);
-
-CREATE TABLE shelf (
-    id BIGSERIAL NOT NULL,
-    shelf_name VARCHAR(128) NOT NULL
+    password_digest VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
 );
 
-ALTER TABLE shelf ADD CONSTRAINT shelf_pkey PRIMARY KEY (id);
+CREATE TABLE mmb_shelf (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    shelf_name VARCHAR(128) NOT NULL,
+    PRIMARY KEY (id)
+);
+
