@@ -40,22 +40,5 @@ router.get('/protected', passport.authenticate('jwt', { session: false }) , (req
 
 /* Return JWT */
 router.post('/getToken', (req, res) => {
-    if(!req.body.email || !req.body.password) {
-        return res.status(401).send('missing field')
-    }
-
-    User.forge({ email: req.body.email }).fetch().then(result => {
-        if (!result) {
-            return res.status(400).send(('user not found'))
-        }
-
-        result.authenticate(req.body.password).then(user => {
-            const payload = { id: user.id }
-            const token = jwt.sign(payload, config.SecretOrKey)
-            res.send(token)
-        }).catch(err => {
-            res.status(401).send('err:', err)
-        })
-    })
 })
 module.exports = router

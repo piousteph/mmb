@@ -25,9 +25,11 @@ app.use(passport.initialize())
 const defaultRoute = require('./routes/default')
 const mediaRoute = require('./routes/media.route')
 const shelfRoute = require('./routes/shelf.route')
+const userRoute = require('./routes/user.route')
 
 app.use('/', defaultRoute)
 app.use('/media', mediaRoute)
 app.use('/shelf', shelfRoute)
+app.use('/user', userRoute)
 
 module.exports = app

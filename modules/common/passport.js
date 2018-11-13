@@ -12,7 +12,7 @@ const JwtOpts = {
 }
 
 const strategy = new JwtStrategy(JwtOpts, (payload, next) => {
-    User.forge({ id: payload.id }).fetch().then(res => {
+    User.forge({ id: payload.id }).fetch({ withRelated: ['profile'] }).then(res => {
         next(null, res)
     })
 })

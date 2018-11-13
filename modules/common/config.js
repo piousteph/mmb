@@ -8,7 +8,7 @@ const dev = {
         client: 'mysql',
         connection: {
             host: '192.168.1.4',
-            user: 'root',
+            user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             ssl: false
@@ -30,7 +30,7 @@ const prod = {
         client: 'mysql',
         connection: {
             host: 'localhost',
-            user: 'root',
+            user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             ssl: false
