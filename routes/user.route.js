@@ -56,9 +56,14 @@ router.post('/login', validator(), (req, res) => {
         }
 
         data.authenticate(req.body.password).then(user => {
+            const payloadNow = Date.now()
+
             const payload = { 
                 id: user.id,
-                profile: user.related('profile').attributes.name
+                profile: user.related('profile').attributes.name,
+                exp: payloadNow + (24 * 60 * 60 * 1000),
+                iat: payloadNow,
+                iss: 'MultiMediaBox v4'
             }
             const token = jwt.sign(payload, config.SecretOrKey)
             res.status(200).json({
