@@ -7,8 +7,15 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 /* GET /user */
-router.get('/', passport.authenticate('jwt', { session: false }) , (req, res) => { 
-    res.send(req.user.attributes)
+router.get('/', validator(), passport.authenticate('jwt', { session: false }) , (req, res) => { 
+    const result = {}
+    User.forge().fetch({ withRelated: ['profile'] }).then(data => {
+        console.log(data)
+        res.status(200).json({
+            error: false,
+            data: []
+        })
+    })
 })
 
 /* GET /user/:userid */
@@ -31,18 +38,71 @@ router.get('/:userid', validator(), passport.authenticate('jwt', { session: fals
 })
 
 /* POST /user */
-router.post('/', passport.authenticate('jwt', { session: false }) , (req, res) => { 
+router.post('/', validator(), passport.authenticate('jwt', { session: false }) , (req, res) => { 
+    const user = new User({
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name
+    })
 
+    user.save().then(() => {
+        res.status(201).json({ 
+            error: false,
+            message: 'User created'
+        })
+    }).catch(err => {
+        console.log('ERROR:', err)
+        res.status(500).json({
+            error: true,
+            message: 'Error during create user'
+        })
+    })
 })
 
 /* PUT /user/:userid */
-router.put('/:userid', passport.authenticate('jwt', { session: false }) , (req, res) => { 
+router.put('/:userid', validator(), passport.authenticate('jwt', { session: false }) , (req, res) => { 
 
+    if (req.user.attributes.profile !== 'Administrator') {
+        res.status(403).json({
+            error: true,
+            message: 'Forbidden'
+        })
+    }
+
+    User.forge({ id: req.params.userid }).fetch({ withRelated: ['profile'] }).then(data => {
+        const newData = data
+
+        newData.name = data.attributes.name !== req.body.name ? newData.name : req.body.name
+        newData.email = data.attributes.email !== req.body.email ? newData.email : req.body.email
+        newData.password = data.attributes.password !== req.body.password ? newData.password : req.body.password
+
+        const user = new User(newData)
+
+        user.save({}, {patch: true}).then(() => {
+            res.status(200).json({ 
+                error: false,
+                message: 'User updated'
+            })
+        }).catch(err => {
+            console.log('ERROR:', err)
+            res.status(500).json({
+                error: true,
+                message: 'Error during update user'
+            })
+    }).catch(err => {
+        console.log('ERROR:', err)
+        res.status(500).json({
+            error: true,
+            message: 'Error during update user'
+    })
 })
 
 /* DELETE /user/:userid */
 router.delete('/:userid', passport.authenticate('jwt', { session: false }) , (req, res) => { 
-
+    res.status(200).json({
+        error: false,
+        message: 'Not implemented'
+    })
 })
 
 /* POST /user/login */

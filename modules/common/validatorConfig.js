@@ -50,6 +50,7 @@ const userRouteValidator = {
             canBeEmpty: false
         }
     }],
+    'GET /user': [],
     'GET /user/:userid': [{
         name: 'userid',
         in: 'params',
@@ -58,6 +59,67 @@ const userRouteValidator = {
             type: 'int',
             canBeEmpty: false,
             minValue: 1
+        }
+    }],
+    'POST /user': [{
+        name: 'name',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'email',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'regexp',
+            regexp: /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/,
+            canBeEmpty: false
+        }
+    }, {
+        name: 'password',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }],
+    'PUT /user/userid': [{
+        name: 'userid',
+        in: 'params',
+        require: true,
+        shouldBe: {
+            type: 'int',
+            canBeEmpty: false,
+            minValue: 1
+        }
+    }, {
+        name: 'name',
+        in: 'body',
+        require: false,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'email',
+        in: 'body',
+        require: false,
+        shouldBe: {
+            type: 'regexp',
+            regexp: /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/,
+            canBeEmpty: false
+        }
+    }, {
+        name: 'password',
+        in: 'body',
+        require: false,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
         }
     }]
 
