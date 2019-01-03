@@ -12,6 +12,11 @@ const JwtOpts = {
 }
 
 const strategy = new JwtStrategy(JwtOpts, (payload, next) => {
+    const payloadNow = Date.now()
+
+    if (payloadNow > payload.exp || playload !== 'MultiMediaBox v4') {
+        next(null, false)
+    }
     User.forge({ id: payload.id }).fetch({ withRelated: ['profile'] }).then(res => {
         next(null, res)
     })
