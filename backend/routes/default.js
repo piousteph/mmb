@@ -33,12 +33,4 @@ router.post('/seeduser', (req, res) => {
     })
 })
 
-/* Check JWT */
-router.get('/protected', passport.authenticate('jwt', { session: false }) , (req, res) => {
-    res.send('PROTECTED')
-})
-
-/* Return JWT */
-router.post('/getToken', (req, res) => {
-})
 module.exports = router
