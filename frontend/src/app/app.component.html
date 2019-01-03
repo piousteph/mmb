@@ -1,0 +1,23 @@
+<nb-layout>
+  <nb-layout-header fixed *ngIf="auth.isLogged()">
+    <div class="header-container left">
+      <a (click)="toggle()" href="#" class="navigation"><i class="nb-menu"></i></a>
+      <div class="logo" (click)="goToHome()">MultiMediaBox IV</div>
+    </div>
+    <div class="header-container">
+      <nb-user [name]="auth.getUser()?.name" [title]="auth.getUser()?.profile"></nb-user>
+    </div>
+  </nb-layout-header>
+  <nb-sidebar *ngIf="auth.isLogged()" state="compacted">
+    <app-menu></app-menu>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    piousteph 2018
+  </nb-layout-footer>
+
+</nb-layout>
