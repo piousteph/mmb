@@ -16,12 +16,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component'; 
+import { ShelfsComponent } from './shelfs/shelfs.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    ShelfsComponent
   ],
   imports: [
     HttpClientModule,

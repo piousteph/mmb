@@ -1,13 +1,16 @@
 export class Shelf {
     public id: number;
     public name: string;
+    public icon: string;
   
     constructor (
       id: number, 
-      name: string
+      name: string,
+      icon: string
     ) {
       this.id = id;
       this.name = name;
+      this.icon = icon;
     }
   }
   

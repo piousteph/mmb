@@ -1,5 +1,8 @@
-<ul>
-    <li *ngFor='let item of data'>
-        {{ item.name }}
+<ul class="menu-items">
+    <li class="menu-item" *ngFor='let item of data'>
+        <a routerLink="/shelf/{{ item.id }}" title="{{ item.name }}">
+            <i class="menu-icon {{ item.icon }}"></i>
+            <span class="menu-title">{{ item.name }}</span>
+        </a>
     </li>
 </ul>

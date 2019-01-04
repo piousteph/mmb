@@ -11,6 +11,7 @@ import {
 import { AuthGuard } from './services/auth-guard.service';
 
 import { HomeComponent } from './home/home.component';
+import { ShelfsComponent } from './shelfs/shelfs.component';
 
 const routes: Routes = [
   {
@@ -42,13 +43,15 @@ const routes: Routes = [
       //   component: NbResetPasswordComponent,
       // },
     ],
-  },
-  {
+  }, {
+    path: 'shelf/:id',
+    component: ShelfsComponent
+  }, {
     path: '',
     canActivate: [AuthGuard],
     children: [
       { path: 'home', component: HomeComponent },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '**', redirectTo: 'home', pathMatch: 'full' },
     ]
   },
 ];

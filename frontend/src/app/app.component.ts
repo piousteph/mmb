@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NbSidebarService } from '@nebular/theme';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,14 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent {
 
-  constructor(private auth: AuthService, private sidebarService: NbSidebarService) {}
+  constructor(private auth: AuthService, private sidebarService: NbSidebarService, public router: Router) {}
 
   toggle() {
     this.sidebarService.toggle(true);
     return false;
+  }
+
+  goToHome() {
+    this.router.navigate(['Home']);
   }
 }

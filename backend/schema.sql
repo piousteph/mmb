@@ -27,11 +27,12 @@ INSERT INTO mmb_user (name, email, password_digest, id_profile) VALUES ('Sylvie'
 CREATE TABLE mmb_shelf (
     id INTEGER NOT NULL AUTO_INCREMENT,
     name VARCHAR(128) NOT NULL,
+    icon VARCHAR(32) NOT NULL,
     id_user INTEGER NOT NULL,
     PRIMARY KEY (id)
 );
 
-INSERT INTO mmb_shelf (name, id_user) VALUES ('Films', 1);
+INSERT INTO mmb_shelf (name, icon, id_user) VALUES ('Films', 'eva eva-film', 1);
 
 CREATE TABLE mmb_provider (
     id INTEGER NOT NULL AUTO_INCREMENT,
