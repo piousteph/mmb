@@ -12,6 +12,7 @@ import { AuthGuard } from './services/auth-guard.service';
 
 import { HomeComponent } from './home/home.component';
 import { ShelfsComponent } from './shelfs/shelfs.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,9 @@ const routes: Routes = [
   }, {
     path: 'shelf/:id',
     component: ShelfsComponent
+  }, {
+    path: 'settings',
+    component: SettingsComponent
   }, {
     path: '',
     canActivate: [AuthGuard],

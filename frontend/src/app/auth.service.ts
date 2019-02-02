@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { User, UserLogged } from './models/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +9,7 @@ import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 export class AuthService {
 
     _isLogged: boolean = false;
-    _user = {}
+    _user: UserLogged
 
     constructor(private authService: NbAuthService) {
         this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
@@ -27,7 +28,7 @@ export class AuthService {
         return this._isLogged;
     }
 
-    getUser() {
+    getUser(): UserLogged {
         return this._user;
     }
 }

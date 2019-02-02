@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ShelfService } from '../services/shelf.service';
-import { Shelfs, Shelf } from '../models/shelf.model';
+import { Shelfs } from '../models/shelf.model';
+import { UserLogged } from '../models/user.model';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'mmb-menu',
@@ -10,25 +12,36 @@ import { Shelfs, Shelf } from '../models/shelf.model';
 
 export class MenuComponent implements OnInit {
 
-  data: Shelf[] = [];
+  data = [];
   resultsLength = 0;
 
-  constructor(private shelf: ShelfService) { }
+  constructor(private auth: AuthService, private shelf: ShelfService) { }
+
+  currentUser: UserLogged = this.auth.getUser();
 
   ngOnInit() {
-    this.loadData()
+    this.loadData();
   }
 
   loadData() {
     this.shelf.getShelfs().subscribe((shelfs: Shelfs) => {
       this.data = [];
       shelfs.rows.forEach(shelf => {
-        this.data.push(new Shelf(
-          +shelf.id,
-          shelf.name,
-          shelf.icon
-        ))
+        this.data.push({
+          id: +shelf.id,
+          name: shelf.name,
+          icon: shelf.icon,
+          link: '/shelf/' + shelf.id
+        })
       })
+      if (this.currentUser.profile === 'Administrateur') {
+        this.data.push({
+          id: 0,
+          name: 'Configuration',
+          icon: 'eva eva-settings',
+          link: '/settings'
+        })
+      }
     });
   }
 }

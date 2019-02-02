@@ -4,7 +4,14 @@ import { HttpClientModule, HttpResponse, HTTP_INTERCEPTORS } from '@angular/comm
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { getDeepFromObject } from '@nebular/auth/helpers';
-import { NbThemeModule, NbLayoutModule, NbUserModule, NbSidebarModule, NbSidebarService } from '@nebular/theme';
+import { NbThemeModule, 
+  NbLayoutModule, 
+  NbUserModule, 
+  NbSidebarModule, 
+  NbSidebarService, 
+  NbRouteTabsetModule,
+  NbTabsetModule,
+  NbCardModule } from '@nebular/theme';
 import { NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions, NbAuthJWTToken, NbAuthModule } from '@nebular/auth';
 
 import { AuthService } from './auth.service';
@@ -16,14 +23,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component'; 
-import { ShelfsComponent } from './shelfs/shelfs.component'; 
+import { ShelfsComponent } from './shelfs/shelfs.component';
+import { SettingsComponent } from './settings/settings.component';
+import { UsersSettingsComponent } from './settings/users/users-settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MenuComponent,
-    ShelfsComponent
+    ShelfsComponent,
+    SettingsComponent,
+    UsersSettingsComponent
   ],
   imports: [
     HttpClientModule,
@@ -33,6 +44,9 @@ import { ShelfsComponent } from './shelfs/shelfs.component';
     NbThemeModule.forRoot({ name: 'corporate' }),
     NbLayoutModule,
     NbSidebarModule,
+    NbTabsetModule,
+    NbRouteTabsetModule,
+    NbCardModule,
 
     NbAuthModule.forRoot({
       strategies: [

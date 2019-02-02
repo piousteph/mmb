@@ -24,7 +24,7 @@ router.get('/', passport.authenticate('jwt', { session: false }) , (req, res) =>
 
             res.status(200).json({ 
                 error: false,
-                data: result
+                rows: result
             })
         }).catch(err => {
             console.log(err)
