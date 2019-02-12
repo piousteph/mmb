@@ -1,7 +1,4 @@
-const securePassword = require('bookshelf-secure-password')
 const config = require('./config')
-const knex = require('knex')(config.database)
-const db = require('bookshelf')(knex)
-db.plugin(securePassword)
+const db = require('knex')(config.database)
 
 module.exports = db

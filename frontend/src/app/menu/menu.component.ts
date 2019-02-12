@@ -28,12 +28,13 @@ export class MenuComponent implements OnInit {
       this.data = [];
       shelfs.rows.forEach(shelf => {
         this.data.push({
-          id: +shelf.id,
-          name: shelf.name,
+          id: +shelf.usid,
+          shelf: shelf.shelf,
           icon: shelf.icon,
-          link: '/shelf/' + shelf.id
+          link: '/shelf/' + shelf.usid
         })
       })
+      console.log(this.currentUser);
       if (this.currentUser.profile === 'Administrateur') {
         this.data.push({
           id: 0,

@@ -1,9 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const config = require('../modules/common/config')
 const passport = require('../modules/common/passport')
-const jwt = require('jsonwebtoken')
-const Media = require('../models/media')
 
 /* GET /media */
 router.get('/', passport.authenticate('jwt', { session: false }) , (req, res) => { 

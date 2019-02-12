@@ -1,19 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const config = require('../modules/common/config')
+const db = require('../modules/common/database')
 const passport = require('../modules/common/passport')
-const Shelf = require('../models/shelf')
 
 /* GET /shelf */
-router.get('/', passport.authenticate('jwt', { session: false }) , (req, res) => { 
-    const user = req.user.toJSON()
-    Shelf.forge({ id_user: user.id }).fetch().then(data => {
-        const jdata = data.toJSON()
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => { 
+    db.select(['usid', 'shelf', 'icon'])
+        .from('mmb_shelf')
+        .leftJoin('mmb_user_shelf', 'id_shelf', 'usid')
+        .where('mmb_user_shelf.id_user', req.user.uuid)
+        .then((data) => {
         res.status(200).json({ 
             error: false,
-            rows: [jdata]
+            rows: data
         })
-    }).catch(err => {
+    }).catch((err) => {
         console.log(err)
         res.status(500).json({
             error: true,

@@ -26,4 +26,10 @@ export class UserService {
     const requestUrl = `${href}`;
     return this.http.get<User>(requestUrl);
   }
+
+  updateUser(user:User): Promise<any> {
+    const href = APIUrl + '/user/' + user.id;
+    const requestUrl = `${href}`;
+    return this.http.put(requestUrl, user).toPromise();
+  }
 }

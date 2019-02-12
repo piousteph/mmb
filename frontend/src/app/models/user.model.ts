@@ -1,15 +1,18 @@
 export class User {
   public id: number;
-  public name: string;
+  public user: string;
+  public email: string;
   public profile: string;
 
   constructor (
     id: number, 
-    name: string,
+    user: string,
+    email: string,
     profile: string
   ) {
     this.id = id;
-    this.name = name;
+    this.user = name;
+    this.email = email;
     this.profile = profile;
   }
 }
@@ -27,18 +30,21 @@ export class Users {
 export class UserLogged {
     public iat: number;
     public id: number;
-    public name: string;
+    public user: string;
+    public email: string;
     public profile: string;
 
     constructor (
       iat: number, 
       id: number, 
-      name: string,
+      user: string,
+      email: string,
       profile: string
     ) {
       this.iat = iat;
       this.id = id;
-      this.name = name;
+      this.user = user;
+      this.email = email;
       this.profile = profile;
     }
 }

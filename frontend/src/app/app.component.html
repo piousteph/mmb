@@ -5,7 +5,7 @@
       <div class="logo" (click)="goToHome()">MultiMediaBox IV</div>
     </div>
     <div class="header-container">
-      <nb-user [name]="auth.getUser()?.name" [title]="auth.getUser()?.profile"></nb-user>
+      <nb-user [name]="auth.getUser()?.user" [title]="auth.getUser()?.profile"></nb-user>
     </div>
   </nb-layout-header>
   <nb-sidebar *ngIf="auth.isLogged()" state="compacted">
@@ -17,7 +17,7 @@
   </nb-layout-column>
 
   <nb-layout-footer fixed>
-    piousteph 2018
+    piousteph 2019
   </nb-layout-footer>
 
 </nb-layout>

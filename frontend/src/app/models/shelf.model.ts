@@ -1,15 +1,15 @@
 export class Shelf {
-    public id: number;
-    public name: string;
+    public usid: number;
+    public shelf: string;
     public icon: string;
   
     constructor (
-      id: number, 
-      name: string,
+      usid: number, 
+      shelf: string,
       icon: string
     ) {
-      this.id = id;
-      this.name = name;
+      this.usid = usid;
+      this.shelf = name;
       this.icon = icon;
     }
   }

@@ -14,11 +14,14 @@ import { NbThemeModule,
   NbCardModule } from '@nebular/theme';
 import { NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions, NbAuthJWTToken, NbAuthModule } from '@nebular/auth';
 
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
 import { AuthService } from './auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { JwtInterceptor } from './jwt.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -47,6 +50,7 @@ import { UsersSettingsComponent } from './settings/users/users-settings.componen
     NbTabsetModule,
     NbRouteTabsetModule,
     NbCardModule,
+    Ng2SmartTableModule,
 
     NbAuthModule.forRoot({
       strategies: [

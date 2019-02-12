@@ -30,7 +30,7 @@ const passport = require('./modules/common/passport')
 app.use(passport.initialize())
 
 app.use(function(req, res, next) {
-    console.log('Route', req.originalUrl)
+    console.log('Route', req.method, req.originalUrl)
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD');

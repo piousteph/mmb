@@ -27,28 +27,17 @@ const routes: Routes = [
         path: 'login',
         component: NbLoginComponent,
       },
-      // {
-      //   path: 'register',
-      //   component: NbRegisterComponent,
-      // },
       {
         path: 'logout',
         component: NbLogoutComponent,
-      },
-      // {
-      //   path: 'request-password',
-      //   component: NbRequestPasswordComponent,
-      // },
-      // {
-      //   path: 'reset-password',
-      //   component: NbResetPasswordComponent,
-      // },
+      }
     ],
   }, {
     path: 'shelf/:id',
     component: ShelfsComponent
   }, {
     path: 'settings',
+    canActivate: [AuthGuard],
     component: SettingsComponent
   }, {
     path: '',

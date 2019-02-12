@@ -1,7 +1,7 @@
 const config = require('./config')
 const passport = require('passport')
 const passportJWT = require('passport-jwt')
-const User = require('../../models/user')
+const db = require('./database')
 
 const JwtStrategy = passportJWT.Strategy
 const ExtractJwt = passportJWT.ExtractJwt
@@ -12,14 +12,14 @@ const JwtOpts = {
 }
 
 const strategy = new JwtStrategy(JwtOpts, (payload, next) => {
-    const payloadNow = Date.now()
-
-    if (payloadNow > payload.exp || playload !== 'MultiMediaBox v4') {
-        next(null, false)
-    }
-    User.forge({ id: payload.id }).fetch({ withRelated: ['profile'] }).then(res => {
-        next(null, res)
-    })
+    db.select('uuid', 'email', 'id_profile')
+        .from('mmb_user')
+        .where('uuid', payload.id)
+        .then(res => {
+            next(null, res[0])
+        }).catch((err) => {
+            console.log('FATAL ERROR', err)
+        })
 })
 
 passport.use(strategy)
