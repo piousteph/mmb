@@ -1,25 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { Users } from '../../models/user.model';
+import { ShelfService } from '../../services/shelf.service';
+import { Shelfs } from '../../models/shelf.model';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
 
 @Component({
-    selector: 'mmb-users-settings',
-    templateUrl: './users-settings.component.html',
-    styleUrls: ['./users-settings.component.scss']
+    selector: 'mmb-shelfs-settings',
+    templateUrl: './shelfs-settings.component.html',
+    styleUrls: ['./shelfs-settings.component.scss']
 })
 
-export class UsersSettingsComponent implements OnInit {
+export class ShelfsSettingsComponent implements OnInit {
 
     source: LocalDataSource;
 
     data = [];
-
-    userType = [
-        { value: '1', title: 'Administrateur' },
-        { value: '2', title: 'Utilisateur' }
-    ];
 
     settings = {
         add: {
@@ -39,41 +34,20 @@ export class UsersSettingsComponent implements OnInit {
             confirmDelete: true
         },
         columns: {
-            user_id: {
+            shelf_id: {
                 title: 'ID',
                 editable: false,
                 addable: false,
                 filter: false
             },
-            user: {
+            shelf: {
                 title: 'Nom',
                 filter: false
-            },
-            email: {
-                title: 'Email',
-                filter: false
-            },
-            id_profile: {
-                title: 'Profile',
-                filter: false,
-                editor: {
-                    type: 'list',
-                    config: {
-                        list: this.userType
-                    }
-                },
-                valuePrepareFunction: (value) => {
-                    if (value === '') {
-                        return value;
-                    } else {
-                        return this.userType.filter(function(item) { return +item.value === +value; })[0].title;
-                    }
-                }
             }
         }
     };
 
-    constructor(private users: UserService, private toastrService: NbToastrService) {
+    constructor(private shelfs: ShelfService, private toastrService: NbToastrService) {
         this.source = new LocalDataSource();
     }
 
@@ -82,18 +56,18 @@ export class UsersSettingsComponent implements OnInit {
     }
 
     loadData() {
-        this.users.getUsers().subscribe((users: Users) => {
+        this.shelfs.getShelfs().subscribe((shelfs: Shelfs) => {
             this.data = [];
-            users.rows.forEach(user => {
-                this.data.push(user);
+            shelfs.rows.forEach(shelf => {
+                this.data.push(shelf);
             });
             this.source.load(this.data);
         });
     }
 
     onCreateConfirm(event):void {
-        this.users.addUser(event.newData).then(data => {
-            event.newData.user_id = data.user_id;
+        this.shelfs.addShelf(event.newData).then(data => {
+            event.newData.shelf_id = data.shelf_id;
             this.toastrService.success(data.message, 'Success')
             event.confirm.resolve(event.newData);
         }).catch(err => {
@@ -103,7 +77,7 @@ export class UsersSettingsComponent implements OnInit {
     }
 
     onSaveConfirm(event):void {
-        this.users.updateUser(event.newData).then(data => {
+        this.shelfs.updateShelf(event.newData).then(data => {
             this.toastrService.success(data.message, 'Success')
             event.confirm.resolve();
         }).catch(err => {
@@ -113,7 +87,7 @@ export class UsersSettingsComponent implements OnInit {
     }
 
     onDeleteConfirm(event): void {
-        this.users.deleteUser(event.data).then(data => {
+        this.shelfs.deleteShelf(event.data).then(data => {
             this.toastrService.success(data.message, 'Success')
             event.confirm.resolve();
         }).catch(err => {

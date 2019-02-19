@@ -12,9 +12,9 @@ const JwtOpts = {
 }
 
 const strategy = new JwtStrategy(JwtOpts, (payload, next) => {
-    db.select('uuid', 'email', 'id_profile')
+    db.select('user_id', 'email', 'id_profile')
         .from('mmb_user')
-        .where('uuid', payload.id)
+        .where('user_id', payload.user_id)
         .then(res => {
             next(null, res[0])
         }).catch((err) => {
@@ -24,4 +24,4 @@ const strategy = new JwtStrategy(JwtOpts, (payload, next) => {
 
 passport.use(strategy)
 
-module.exports=passport
+module.exports = passport

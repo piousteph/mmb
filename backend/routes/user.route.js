@@ -9,34 +9,33 @@ const jwt = require('jsonwebtoken')
 const user = require('../modules/user')
 
 /* GET /user */
-router.get('/', passport.authenticate('jwt', { session: false }) , (req, res) => { 
+router.get('/', passport.authenticate('jwt', {
+    session: false
+}), validator(), (req, res) => {
     if (user.isAdmin(req.user)) {
-        db.select(['uuid', 'email', 'user', 'id_profile', 'profile'])
+        db.select(['user_id', 'email', 'user', 'id_profile'])
             .from('mmb_user')
-            .innerJoin('mmb_profile','id_profile', 'upid')
             .then((data) => {
-            let result = []
-            for (let i = 0; i < data.length; ++i) {
-                result.push({
-                    id: data[i].uuid,
-                    email: data[i].email,
-                    user: data[i].user,
-                    id_profile: data[i].upid,
-                    profile: data[i].profile
+                let result = []
+                for (let i = 0; i < data.length; ++i) {
+                    result.push({
+                        user_id: data[i].user_id,
+                        email: data[i].email,
+                        user: data[i].user,
+                        id_profile: data[i].id_profile
+                    })
+                }
+                res.status(200).json({
+                    error: false,
+                    rows: result
                 })
-            }
-
-            res.status(200).json({ 
-                error: false,
-                rows: result
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({
+                    error: true,
+                    message: 'Fatal Error'
+                })
             })
-        }).catch(err => {
-            console.log(err)
-            res.status(500).json({
-                error: true,
-                message: 'Fatal Error'
-            })
-        })
     } else {
         res.status(401).json({
             error: true,
@@ -46,34 +45,64 @@ router.get('/', passport.authenticate('jwt', { session: false }) , (req, res) =>
 })
 
 /* GET /user/:userid */
-router.get('/:userid', validator(), passport.authenticate('jwt', { session: false }) , (req, res) => { 
+router.get('/:userid', passport.authenticate('jwt', {
+    session: false
+}), validator(), (req, res) => {
     if (user.isAdmin(req.user) || +req.user.id === +req.params.userid) {
-        db.select(['uuid', 'email', 'user', 'id_profile', 'profile'])
+        db.select(['user_id', 'email', 'user', 'id_profile'])
             .from('mmb_user')
-            .innerJoin('mmb_profile','id_profile', 'upid')
-            .where('uuid', req.params.userid)
+            .where('user_id', req.params.userid)
             .then(data => {
-            let result = []
-            for (let i = 0; i < data.length; ++i) {
-                console.log(data[i])
-                result.push({
-                    id: data[i].uuid,
-                    email: data[i].email,
-                    user: data[i].user,
-                    id_profile: data[i].upid,
-                    profile: data[i].profile
-                })
-            }
+                let result = []
+                for (let i = 0; i < data.length; ++i) {
+                    result.push({
+                        user_id: data[i].user_id,
+                        email: data[i].email,
+                        user: data[i].user,
+                        id_profile: data[i].id_profile
+                    })
+                }
 
-            res.status(200).json({ 
+                res.status(200).json({
+                    error: false,
+                    rows: result
+                })
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({
+                    error: true,
+                    message: 'Fatal Error'
+                })
+            })
+    } else {
+        res.status(401).json({
+            error: true,
+            message: 'Unauthorized'
+        })
+    }
+})
+
+/* POST /user */
+router.post('/', passport.authenticate('jwt', {
+    session: false
+}), validator(), (req, res) => {
+    if (user.isAdmin(req.user)) {
+        const newValues = {
+            email: req.body.email,
+            user: req.body.user,
+            id_profile: req.body.id_profile
+        }
+        db.table('mmb_user').insert(newValues).then(data => {
+            res.status(201).json({
                 error: false,
-                rows: result
+                user_id: data[0],
+                message: 'User successfully added'
             })
         }).catch(err => {
-            console.log(err)
+            console.log('RATE', err)
             res.status(500).json({
                 error: true,
-                message: 'Fatal Error'
+                message: 'User not added'
             })
         })
     } else {
@@ -84,24 +113,27 @@ router.get('/:userid', validator(), passport.authenticate('jwt', { session: fals
     }
 })
 
-/* POST /user */
-router.post('/', passport.authenticate('jwt', { session: false }) , (req, res) => { 
-
-})
-
 /* PUT /user/:userid */
-router.put('/:userid', passport.authenticate('jwt', { session: false }) , (req, res) => { 
+router.put('/:userid', passport.authenticate('jwt', {
+    session: false
+}), validator(), (req, res) => {
     if (user.isAdmin(req.user)) {
-        // let data = {
-        //     id: req.body.id,
-        //     name
-        // data.id = req.query.userid
-        // let user = new UserMod
-        user.set(req.body)
-        user.save()
-        res.status(200).json({
-            error: false,
-            message: 'User successfully updated'
+        const newValues = {
+            email: req.body.email,
+            user: req.body.user,
+            id_profile: req.body.id_profile
+        }
+        db.table('mmb_user').update(newValues).where('user_id', +req.params.userid).then(data => {
+            res.status(200).json({
+                error: false,
+                message: 'User successfully updated'
+            })
+        }).catch(err => {
+            console.log('RATE', err)
+            res.status(500).json({
+                error: true,
+                message: 'User not updated'
+            })
         })
     } else {
         res.status(401).json({
@@ -112,15 +144,35 @@ router.put('/:userid', passport.authenticate('jwt', { session: false }) , (req, 
 })
 
 /* DELETE /user/:userid */
-router.delete('/:userid', passport.authenticate('jwt', { session: false }) , (req, res) => { 
-
+router.delete('/:userid', passport.authenticate('jwt', {
+    session: false
+}), validator(), (req, res) => {
+    if (user.isAdmin(req.user) && req.params.userid !== req.user.uuid) {
+        db.table('mmb_user').delete().where('user_id', +req.params.userid).then(data => {
+            res.status(200).json({
+                error: false,
+                message: 'User successfully deleted'
+            })
+        }).catch(err => {
+            console.log('RATE', err)
+            res.status(500).json({
+                error: true,
+                message: 'User not deleted'
+            })
+        })
+    } else {
+        res.status(401).json({
+            error: true,
+            message: 'Unauthorized'
+        })
+    }
 })
 
 /* POST /user/login */
-router.post('/login', validator(), (req, res) => { 
-    db.select(['uuid', 'email', 'user', 'password_digest', 'upid', 'profile'])
+router.post('/login', validator(), (req, res) => {
+    db.select(['user_id', 'email', 'user', 'password_digest', 'profile_id', 'profile'])
         .from('mmb_user')
-        .innerJoin('mmb_profile','id_profile', 'upid')
+        .innerJoin('mmb_profile', 'id_profile', 'profile_id')
         .where('email', req.body.email)
         .then(data => {
             if (data.length === 0) {
@@ -129,28 +181,35 @@ router.post('/login', validator(), (req, res) => {
                     message: 'Unauthorized'
                 })
             }
-        security.authenticate(data[0], req.body.password).then(authenticated => {
-            if (authenticated) {
-                const payload = { 
-                    exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24), // 24h
-                    id: data[0].uuid,
-                    email: data[0].email,
-                    user: data[0].user,
-                    id_profile: data[0].upid,
-                    profile: data[0].profile
+            security.authenticate(data[0], req.body.password).then(authenticated => {
+                if (authenticated) {
+                    const payload = {
+                        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24), // 24h
+                        user_id: data[0].user_id,
+                        email: data[0].email,
+                        user: data[0].user,
+                        profile_id: data[0].profile_id,
+                        profile: data[0].profile
+                    }
+                    const token = jwt.sign(payload, config.SecretOrKey)
+                    res.status(200).json({
+                        error: false,
+                        message: 'Authenticated',
+                        token: token
+                    })
+                } else {
+                    return res.status(401).json({
+                        error: true,
+                        message: 'Unauthorized'
+                    })
                 }
-                const token = jwt.sign(payload, config.SecretOrKey)
-                res.status(200).json({
-                    error: false,
-                    message: 'Authenticated', 
-                    token: token
-                })
-            } else {
-                return res.status(401).json({
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({
                     error: true,
-                    message: 'Unauthorized'
+                    message: err
                 })
-            }
+            })
         }).catch(err => {
             console.log(err)
             res.status(500).json({
@@ -158,17 +217,10 @@ router.post('/login', validator(), (req, res) => {
                 message: err
             })
         })
-    }).catch(err => {
-        console.log(err)
-        res.status(500).json({
-            error: true,
-            message: err
-        })
-    })
 })
 
 /* GET /user/logout */
-router.get('/logout', (req, res) => { 
+router.get('/logout', validator(), (req, res) => {
 
 })
 

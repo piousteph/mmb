@@ -2,11 +2,11 @@
   <nb-card-body>
 
     <nb-tabset>
-      <nb-tab tabTitle="Users">
+      <nb-tab tabTitle="Users" *ngIf="auth.isAdmin()">
         <mmb-users-settings></mmb-users-settings>
       </nb-tab>
-      <nb-tab tabTitle="Shelfs" disabled>
-        <p>List of <strong>SHELFS</strong>.</p>
+      <nb-tab tabTitle="Shelfs">
+        <mmb-shelfs-settings></mmb-shelfs-settings>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>

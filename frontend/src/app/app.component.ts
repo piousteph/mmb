@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NbSidebarService } from '@nebular/theme';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

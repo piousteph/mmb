@@ -11,17 +11,17 @@ import { NbThemeModule,
   NbSidebarService, 
   NbRouteTabsetModule,
   NbTabsetModule,
-  NbCardModule } from '@nebular/theme';
+  NbCardModule,
+  NbToastrModule } from '@nebular/theme';
 import { NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions, NbAuthJWTToken, NbAuthModule } from '@nebular/auth';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
-import { AuthService } from './auth.service';
-import { AuthGuard } from './services/auth-guard.service';
-import { JwtInterceptor } from './jwt.interceptor';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth-guard.service';
+import { JwtInterceptor } from './auth/jwt.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
-
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -29,6 +29,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ShelfsComponent } from './shelfs/shelfs.component';
 import { SettingsComponent } from './settings/settings.component';
 import { UsersSettingsComponent } from './settings/users/users-settings.component';
+import { ShelfsSettingsComponent } from './settings/shelfs/shelfs-settings.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { UsersSettingsComponent } from './settings/users/users-settings.componen
     MenuComponent,
     ShelfsComponent,
     SettingsComponent,
-    UsersSettingsComponent
+    UsersSettingsComponent,
+    ShelfsSettingsComponent
   ],
   imports: [
     HttpClientModule,
@@ -51,6 +53,7 @@ import { UsersSettingsComponent } from './settings/users/users-settings.componen
     NbRouteTabsetModule,
     NbCardModule,
     Ng2SmartTableModule,
+    NbToastrModule.forRoot(),
 
     NbAuthModule.forRoot({
       strategies: [

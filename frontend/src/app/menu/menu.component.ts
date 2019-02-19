@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ShelfService } from '../services/shelf.service';
 import { Shelfs } from '../models/shelf.model';
 import { UserLogged } from '../models/user.model';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'mmb-menu',
@@ -28,21 +28,18 @@ export class MenuComponent implements OnInit {
       this.data = [];
       shelfs.rows.forEach(shelf => {
         this.data.push({
-          id: +shelf.usid,
+          id: +shelf.shelf_id,
           shelf: shelf.shelf,
           icon: shelf.icon,
-          link: '/shelf/' + shelf.usid
-        })
-      })
-      console.log(this.currentUser);
-      if (this.currentUser.profile === 'Administrateur') {
-        this.data.push({
-          id: 0,
-          name: 'Configuration',
-          icon: 'eva eva-settings',
-          link: '/settings'
-        })
-      }
+          link: '/shelf/' + shelf.shelf_id
+        });
+      });
+      this.data.push({
+        id: 0,
+        name: 'Configuration',
+        icon: 'eva eva-settings',
+        link: '/settings'
+      });
     });
   }
 }

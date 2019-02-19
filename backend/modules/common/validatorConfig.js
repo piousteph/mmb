@@ -87,7 +87,7 @@ const userRouteValidator = {
             canBeEmpty: false
         }
     }],
-    'PUT /user/userid': [{
+    'PUT /user/:userid': [{
         name: 'userid',
         in: 'params',
         require: true,
@@ -97,9 +97,9 @@ const userRouteValidator = {
             minValue: 1
         }
     }, {
-        name: 'name',
+        name: 'user',
         in: 'body',
-        require: false,
+        require: true,
         shouldBe: {
             type: 'string',
             canBeEmpty: false
@@ -107,7 +107,7 @@ const userRouteValidator = {
     }, {
         name: 'email',
         in: 'body',
-        require: false,
+        require: true,
         shouldBe: {
             type: 'regexp',
             regexp: /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/,
@@ -116,13 +116,20 @@ const userRouteValidator = {
     }, {
         name: 'password',
         in: 'body',
-        require: false,
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'id_profile',
+        in: 'body',
+        require: true,
         shouldBe: {
             type: 'string',
             canBeEmpty: false
         }
     }]
-
 }
 
 module.exports = Object.assign(

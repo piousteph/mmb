@@ -1,19 +1,22 @@
 export class User {
-  public id: number;
+  public user_id: number;
   public user: string;
   public email: string;
   public profile: string;
+  public profile_id: number;
 
   constructor (
-    id: number, 
+    user_id: number,
     user: string,
     email: string,
-    profile: string
+    profile: string,
+    profile_id: number
   ) {
-    this.id = id;
-    this.user = name;
+    this.user_id = +user_id;
+    this.user = user;
     this.email = email;
     this.profile = profile;
+    this.profile_id = +profile_id;
   }
 }
 
@@ -22,29 +25,32 @@ export class Users {
   public rows: Users[];
 
   constructor(total: number, rows: Users[]) {
-    this.total = total;
+    this.total = +total;
     this.rows = rows;
   }
 }
 
 export class UserLogged {
     public iat: number;
-    public id: number;
+    public user_id: number;
     public user: string;
     public email: string;
     public profile: string;
+    public profile_id: number;
 
     constructor (
-      iat: number, 
-      id: number, 
+      iat: number,
+      user_id: number,
       user: string,
       email: string,
-      profile: string
+      profile: string,
+      profile_id: number
     ) {
       this.iat = iat;
-      this.id = id;
+      this.user_id = +user_id;
       this.user = user;
       this.email = email;
       this.profile = profile;
+      this.profile_id = +profile_id;
     }
 }

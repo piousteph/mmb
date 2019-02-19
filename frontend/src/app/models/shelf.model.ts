@@ -1,26 +1,25 @@
 export class Shelf {
-    public usid: number;
+    public shelf_id: number;
     public shelf: string;
     public icon: string;
-  
+
     constructor (
-      usid: number, 
+      shelf_id: number,
       shelf: string,
       icon: string
     ) {
-      this.usid = usid;
-      this.shelf = name;
+      this.shelf_id = shelf_id;
+      this.shelf = shelf;
       this.icon = icon;
     }
   }
-  
+
   export class Shelfs {
     public total: number;
     public rows: Shelf[];
-  
+
     constructor(total: number, rows: Shelf[]) {
       this.total = total;
       this.rows = rows;
     }
   }
-  
