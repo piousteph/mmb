@@ -54,3 +54,8 @@ export class UserLogged {
       this.profile_id = +profile_id;
     }
 }
+
+export const userType = [
+  { value: '1', title: 'Administrateur' },
+  { value: '2', title: 'Utilisateur' }
+];

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Users } from '../../models/user.model';
+import { Users, userType } from '../../models/user.model';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
 
@@ -15,11 +15,6 @@ export class UsersSettingsComponent implements OnInit {
     source: LocalDataSource;
 
     data = [];
-
-    userType = [
-        { value: '1', title: 'Administrateur' },
-        { value: '2', title: 'Utilisateur' }
-    ];
 
     settings = {
         add: {
@@ -59,14 +54,14 @@ export class UsersSettingsComponent implements OnInit {
                 editor: {
                     type: 'list',
                     config: {
-                        list: this.userType
+                        list: userType
                     }
                 },
                 valuePrepareFunction: (value) => {
                     if (value === '') {
                         return value;
                     } else {
-                        return this.userType.filter(function(item) { return +item.value === +value; })[0].title;
+                        return userType.filter(function(item) { return +item.value === +value; })[0].title;
                     }
                 }
             }

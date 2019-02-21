@@ -29,6 +29,26 @@ Full declaration for parameter
 */
 
 const paramConfigValidator = {
+    shelfid: [{
+        name: 'shelfid',
+        in: 'params',
+        require: true,
+        shouldBe: {
+            type: 'int',
+            canBeEmpty: false,
+            minValue: 1
+        }
+    }],
+    userid: [{
+        name: 'userid',
+        in: 'params',
+        require: true,
+        shouldBe: {
+            type: 'int',
+            canBeEmpty: false,
+            minValue: 1
+        }
+    }]
 }
 
 const userRouteValidator = {
@@ -52,14 +72,7 @@ const userRouteValidator = {
     }],
     'GET /user': [],
     'GET /user/:userid': [{
-        name: 'userid',
-        in: 'params',
-        require: true,
-        shouldBe: {
-            type: 'int',
-            canBeEmpty: false,
-            minValue: 1
-        }
+        appendConfig: ['userid']
     }],
     'POST /user': [{
         name: 'name',
@@ -88,14 +101,7 @@ const userRouteValidator = {
         }
     }],
     'PUT /user/:userid': [{
-        name: 'userid',
-        in: 'params',
-        require: true,
-        shouldBe: {
-            type: 'int',
-            canBeEmpty: false,
-            minValue: 1
-        }
+        appendConfig: ['userid']
     }, {
         name: 'user',
         in: 'body',
@@ -132,8 +138,20 @@ const userRouteValidator = {
     }]
 }
 
+const shelfRouteValidator = {
+    'GET /shelf': []
+}
+
+const mediaRouteValidator = {
+    'GET /media/:shelfid': [{
+        appendConfig: ['shelfid']
+    }]
+}
+
 module.exports = Object.assign(
     {},
     paramConfigValidator,
-    userRouteValidator
+    userRouteValidator,
+    shelfRouteValidator,
+    mediaRouteValidator
 )

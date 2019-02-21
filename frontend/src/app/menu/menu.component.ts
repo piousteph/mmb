@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit {
       this.data.push({
         id: 0,
         name: 'Configuration',
-        icon: 'eva eva-settings',
+        icon: 'eva eva-settings-outline',
         link: '/settings'
       });
     });

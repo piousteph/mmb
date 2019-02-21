@@ -1,12 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../modules/common/database')
+const validator = require('../modules/common/validator')
 const passport = require('../modules/common/passport')
 
 /* GET /shelf */
-router.get('/', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
     console.log('USER', req.user)
 
     db.select(['shelf_id', 'shelf', 'icon'])
@@ -19,17 +18,15 @@ router.get('/', passport.authenticate('jwt', {
             })
         }).catch((err) => {
             console.log(err)
-            res.status(500).json({
+            res.status(403).json({
                 error: true,
-                message: 'Fatal Error'
+                message: 'Forbbiden'
             })
         })
 })
 
 /* GET /shelf/:shelfid */
-router.get('/:shelfid', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
+router.get('/:shelfid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
     db.select(['media_id', 'name', 'icon'])
         .from('mmb_media')
         .leftJoin('mmb_user_shelf', 'id_shelf', 'usid')
@@ -41,17 +38,15 @@ router.get('/:shelfid', passport.authenticate('jwt', {
             })
         }).catch((err) => {
             console.log(err)
-            res.status(500).json({
+            res.status(403).json({
                 error: true,
-                message: 'Fatal Error'
+                message: 'Forbbiden'
             })
         })
 })
 
 /* POST /shelf */
-router.post('/', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
     const newValues = {
         shelf: req.body.shelf,
         icon: '',
@@ -73,9 +68,7 @@ router.post('/', passport.authenticate('jwt', {
 })
 
 /* PUT /shelf/:shelfid */
-router.put('/:shelfid', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
+router.put('/:shelfid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
     if (req.body.user_id === req.user.user_id) {
         const newValues = {
             shelf: req.body.shelf,
@@ -102,9 +95,7 @@ router.put('/:shelfid', passport.authenticate('jwt', {
 })
 
 /* DELETE /shelf/:shelfid */
-router.delete('/:shelfid', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
+router.delete('/:shelfid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
 
 })
 

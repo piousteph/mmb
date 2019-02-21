@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ShelfService } from '../../services/shelf.service';
-import { Shelfs } from '../../models/shelf.model';
+import { Shelfs, shelfIconsList } from '../../models/shelf.model';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
+import { ShelfIconComponent } from './shelf-icon.component';
+import { ShelfIconEditorComponent } from './shelf-icon-editor.component';
 
 @Component({
     selector: 'mmb-shelfs-settings',
@@ -43,6 +45,16 @@ export class ShelfsSettingsComponent implements OnInit {
             shelf: {
                 title: 'Nom',
                 filter: false
+            },
+            icon: {
+                title: 'Icon',
+                type: 'custom',
+                filter: false,
+                editor: {
+                    type: 'custom',
+                    component: ShelfIconEditorComponent,
+                },
+                renderComponent: ShelfIconComponent
             }
         }
     };

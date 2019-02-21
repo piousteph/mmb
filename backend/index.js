@@ -20,6 +20,8 @@ app.use(Express.urlencoded({
 
 app.use(Helmet())
 
+app.use(Express.static('public'))
+
 // app.use(function (req, res, next) {
 //     res.header('Access-Control-Allow-Origin', req.headers.origin)
 //     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
@@ -31,19 +33,19 @@ app.use(passport.initialize())
 
 app.use(function(req, res, next) {
     console.log('Route', req.method, req.originalUrl)
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD');
-    next();
-});
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD')
+    next()
+})
 
 /* Routes Management */
-const defaultRoute = require('./routes/default')
+const unauthenticatedRoute = require('./routes/unauthenticated.route')
 const mediaRoute = require('./routes/media.route')
 const shelfRoute = require('./routes/shelf.route')
 const userRoute = require('./routes/user.route')
 
-app.use('/', defaultRoute)
+app.use('/', unauthenticatedRoute)
 app.use('/media', mediaRoute)
 app.use('/shelf', shelfRoute)
 app.use('/user', userRoute)

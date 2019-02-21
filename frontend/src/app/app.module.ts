@@ -4,11 +4,11 @@ import { HttpClientModule, HttpResponse, HTTP_INTERCEPTORS } from '@angular/comm
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { getDeepFromObject } from '@nebular/auth/helpers';
-import { NbThemeModule, 
-  NbLayoutModule, 
-  NbUserModule, 
-  NbSidebarModule, 
-  NbSidebarService, 
+import { NbThemeModule,
+  NbLayoutModule,
+  NbUserModule,
+  NbSidebarModule,
+  NbSidebarService,
   NbRouteTabsetModule,
   NbTabsetModule,
   NbCardModule,
@@ -30,6 +30,9 @@ import { ShelfsComponent } from './shelfs/shelfs.component';
 import { SettingsComponent } from './settings/settings.component';
 import { UsersSettingsComponent } from './settings/users/users-settings.component';
 import { ShelfsSettingsComponent } from './settings/shelfs/shelfs-settings.component';
+import { ShelfIconComponent } from './settings/shelfs/shelf-icon.component';
+import { ShelfIconEditorComponent } from './settings/shelfs/shelf-icon-editor.component';
+import { MediaComponent } from './shelfs/media/media.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,14 @@ import { ShelfsSettingsComponent } from './settings/shelfs/shelfs-settings.compo
     ShelfsComponent,
     SettingsComponent,
     UsersSettingsComponent,
-    ShelfsSettingsComponent
+    ShelfsSettingsComponent,
+    ShelfIconComponent,
+    ShelfIconEditorComponent,
+    MediaComponent
+  ],
+  entryComponents: [
+    ShelfIconComponent,
+    ShelfIconEditorComponent
   ],
   imports: [
     HttpClientModule,
