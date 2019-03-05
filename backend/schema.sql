@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS mmb_media;
 DROP TABLE IF EXISTS mmb_shelf;
 DROP TABLE IF EXISTS mmb_user;
-DROP TABLE IF EXISTS mmb_provider;
 DROP TABLE IF EXISTS mmb_profile;
 
 CREATE TABLE mmb_profile (
@@ -12,15 +11,6 @@ CREATE TABLE mmb_profile (
 
 INSERT INTO mmb_profile (profile) VALUES ('Administrateur');
 INSERT INTO mmb_profile (profile) VALUES ('Utilisateur');
-
-CREATE TABLE mmb_provider (
-    provider_id INTEGER NOT NULL AUTO_INCREMENT,
-    provider VARCHAR(128) NOT NULL,
-    module VARCHAR(32) NOT NULL,
-    PRIMARY KEY (provider_id)
-);
-
-INSERT INTO mmb_provider (provider, module) VALUES ('Amazon', 'DVD');
 
 CREATE TABLE mmb_user (
     user_id INTEGER NOT NULL AUTO_INCREMENT,
@@ -38,12 +28,12 @@ CREATE TABLE mmb_shelf (
     shelf_id INTEGER NOT NULL AUTO_INCREMENT,
     shelf VARCHAR(128) NOT NULL,
     icon VARCHAR(32) NOT NULL,
-    provider_id INTEGER NOT NULL DEFAULT 1,
+    provider INTEGER NOT NULL,
     id_user INTEGER NOT NULL,
     PRIMARY KEY (shelf_id)
 );
 
-INSERT INTO mmb_shelf (shelf, icon, id_user) VALUES ('Films', 'eva eva-film', 1);
+INSERT INTO mmb_shelf (shelf, icon, provider, id_user) VALUES ('Films', 'eva eva-film', 1, 1);
 
 CREATE TABLE mmb_media (
     media_id INTEGER NOT NULL AUTO_INCREMENT,

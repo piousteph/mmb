@@ -48,6 +48,17 @@ const paramConfigValidator = {
             canBeEmpty: false,
             minValue: 1
         }
+    }],
+    providerid: [{
+        name: 'providerid',
+        in: 'params',
+        require: true,
+        shouldBe: {
+            type: 'int',
+            canBeEmpty: false,
+            minValue: 1,
+            maxValue: 3
+        }
     }]
 }
 
@@ -75,7 +86,7 @@ const userRouteValidator = {
         appendConfig: ['userid']
     }],
     'POST /user': [{
-        name: 'name',
+        name: 'user',
         in: 'body',
         require: true,
         shouldBe: {
@@ -93,6 +104,14 @@ const userRouteValidator = {
         }
     }, {
         name: 'password',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'id_profile',
         in: 'body',
         require: true,
         shouldBe: {
@@ -135,11 +154,73 @@ const userRouteValidator = {
             type: 'string',
             canBeEmpty: false
         }
+    }],
+    'DELETE /user/:userid': [{
+        appendConfig: ['userid']
     }]
 }
 
+const metaRouteValidator = {
+    'GET /meta': []
+}
+
 const shelfRouteValidator = {
-    'GET /shelf': []
+    'GET /shelf': [],
+    'POST /shelf': [{
+        name: 'icon',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'provider',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'number',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'shelf',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }],
+    'PUT /shelf/:shelfid': [{
+        appendConfig: ['shelfid']
+    }, {
+        name: 'icon',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'provider',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'number',
+            canBeEmpty: false
+        }
+    }, {
+        name: 'shelf',
+        in: 'body',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false
+        }
+    }],
+    'DELETE /shelf/:shelfid': [{
+        appendConfig: ['shelfid']
+    }]
 }
 
 const mediaRouteValidator = {
@@ -148,10 +229,26 @@ const mediaRouteValidator = {
     }]
 }
 
-module.exports = Object.assign(
-    {},
+const providerRouteValidator = {
+    'GET /provider/:providerid': [{
+        appendConfig: ['providerid']
+    }, {
+        name: 'title',
+        in: 'query',
+        require: true,
+        shouldBe: {
+            type: 'string',
+            canBeEmpty: false,
+            maxLength: 32
+        }
+    }]
+}
+
+module.exports = Object.assign({},
     paramConfigValidator,
     userRouteValidator,
+    metaRouteValidator,
     shelfRouteValidator,
-    mediaRouteValidator
+    mediaRouteValidator,
+    providerRouteValidator
 )

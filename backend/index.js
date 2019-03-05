@@ -44,10 +44,14 @@ const unauthenticatedRoute = require('./routes/unauthenticated.route')
 const mediaRoute = require('./routes/media.route')
 const shelfRoute = require('./routes/shelf.route')
 const userRoute = require('./routes/user.route')
+const providerRoute = require('./routes/provider.route')
+const metaRoute = require('./routes/meta.route')
 
 app.use('/', unauthenticatedRoute)
 app.use('/media', mediaRoute)
 app.use('/shelf', shelfRoute)
 app.use('/user', userRoute)
+app.use('/provider', providerRoute)
+app.use('/meta', metaRoute)
 
 module.exports = app

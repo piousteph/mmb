@@ -1,38 +1,24 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../modules/common/database')
 const validator = require('../modules/common/validator')
 const passport = require('../modules/common/passport')
-
-
-/* GET /provider */
-router.get('/', passport.authenticate('jwt', { session: false }), validator(), (req, res) => { 
-
-})
+const providers = require('../modules/provider')
 
 /* GET /provider/:providerid */
-router.get('/:userid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => { 
-
-})
-
-/* POST /provider */
-router.post('/', passport.authenticate('jwt', { session: false }), validator(), (req, res) => { 
-
-})
-
-/* PUT /provider/:providerid */
-router.put('/:providerid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => { 
-
-})
-
-/* DELETE /provider/:providerid */
-router.delete('/:providerid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => { 
-
-})
-
-/* POST /provider/:providerid/search */
-router.post('/:providerid/search', passport.authenticate('jwt', { session: false }), validator(), (req, res) => { 
-
+router.get('/:providerid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
+    try {
+        const file = providers.getProviderById(req.params.providerid)
+        const provider = require("../modules/providers/" + file)
+        provider.search(req.query.title).then(data => {
+            res.status(200).json({
+                error: false,
+                message: 'OK',
+                data: data
+            })
+        })
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 module.exports = router

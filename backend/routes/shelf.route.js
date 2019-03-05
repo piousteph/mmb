@@ -6,9 +6,7 @@ const passport = require('../modules/common/passport')
 
 /* GET /shelf */
 router.get('/', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
-    console.log('USER', req.user)
-
-    db.select(['shelf_id', 'shelf', 'icon'])
+    db.select(['shelf_id', 'shelf', 'provider', 'icon'])
         .from('mmb_shelf')
         .where('id_user', req.user.user_id)
         .then((data) => {
@@ -49,8 +47,9 @@ router.get('/:shelfid', passport.authenticate('jwt', { session: false }), valida
 router.post('/', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
     const newValues = {
         shelf: req.body.shelf,
-        icon: '',
-        id_user: req.user.user_id
+        icon: req.body.icon,
+        id_user: req.user.user_id,
+        provider: req.body.provider
     }
     db.table('mmb_shelf').insert(newValues).then(data => {
         res.status(201).json({
@@ -69,34 +68,57 @@ router.post('/', passport.authenticate('jwt', { session: false }), validator(), 
 
 /* PUT /shelf/:shelfid */
 router.put('/:shelfid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
-    if (req.body.user_id === req.user.user_id) {
-        const newValues = {
-            shelf: req.body.shelf,
-            icon: req.body.icon
-        }
-        db.table('mmb_shelf').update(newValues).where('shelf_id', +req.params.shelfid).then(data => {
-            res.status(200).json({
-                error: false,
-                message: 'User successfully updated'
+    db.table('mmb_shelf').count().where('id_user', req.user.user_id).andWhere('shelf_id', req.params.shelfid).then(data => {
+        if (data.length === 1) {
+            const newValues = {
+                shelf: req.body.shelf,
+                icon: req.body.icon,
+                provider: req.body.provider
+            }
+            db.table('mmb_shelf').update(newValues).where('shelf_id', +req.params.shelfid).then(data => {
+                res.status(200).json({
+                    error: false,
+                    message: 'Shelf successfully updated'
+                })
+            }).catch(err => {
+                console.log('RATE', err)
+                res.status(500).json({
+                    error: true,
+                    message: 'Shelf not updated'
+                })
             })
-        }).catch(err => {
-            console.log('RATE', err)
-            res.status(500).json({
+        } else {
+            res.status(401).json({
                 error: true,
-                message: 'Shelf not updated'
+                message: 'Unthorized'
             })
-        })
-    } else {
-        res.status(401).json({
-            error: true,
-            message: 'Unthorized'
-        })
-    }
+        }
+    })
 })
 
 /* DELETE /shelf/:shelfid */
 router.delete('/:shelfid', passport.authenticate('jwt', { session: false }), validator(), (req, res) => {
-
+    db.table('mmb_shelf').count().where('id_user', req.user.user_id).andWhere('shelf_id', req.params.shelfid).then(data => {
+        if (data.length === 1) {
+            db.table('mmb_shelf').delete().where('shelf_id', +req.params.shelfid).then(data => {
+                res.status(200).json({
+                    error: false,
+                    message: 'Shelf successfully deleted'
+                })
+            }).catch(err => {
+                console.log('RATE', err)
+                res.status(500).json({
+                    error: true,
+                    message: 'Shelf not updated'
+                })
+            })
+        } else {
+            res.status(401).json({
+                error: true,
+                message: 'Unthorized'
+            })
+        }
+    })
 })
 
 module.exports = router
