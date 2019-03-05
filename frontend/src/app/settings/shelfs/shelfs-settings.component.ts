@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ShelfService } from '../../services/shelf.service';
-import { Shelfs, shelfIconsList } from '../../models/shelf.model';
+import { Shelfs } from '../../models/shelf.model';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
-import { ShelfIconComponent } from './shelf-icon.component';
-import { ShelfIconEditorComponent } from './shelf-icon-editor.component';
+import { ShelfIconRenderComponent } from './icon/shelf-icon-render.component';
+import { ShelfIconEditorComponent } from './icon/shelf-icon-editor.component';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
     selector: 'mmb-shelfs-settings',
@@ -40,26 +41,46 @@ export class ShelfsSettingsComponent implements OnInit {
                 title: 'ID',
                 editable: false,
                 addable: false,
-                filter: false
+                filter: false,
+                width: '50px'
             },
             shelf: {
                 title: 'Nom',
                 filter: false
             },
+            provider: {
+                title: 'Fournisseur',
+                filter: false,
+                width: '250px',
+                editor: {
+                    type: 'list',
+                    config: {
+                        list: this.metaService.getProviders()
+                    }
+                },
+                valuePrepareFunction: (value) => {
+                    if (value === '' || value === 0) {
+                        return value;
+                    } else {
+                        return this.metaService.getProviders().filter(function(item) { return +item.value === +value; })[0].title;
+                    }
+                }
+            },
             icon: {
                 title: 'Icon',
                 type: 'custom',
                 filter: false,
+                width: '75px',
                 editor: {
                     type: 'custom',
                     component: ShelfIconEditorComponent,
                 },
-                renderComponent: ShelfIconComponent
+                renderComponent: ShelfIconRenderComponent
             }
         }
     };
 
-    constructor(private shelfs: ShelfService, private toastrService: NbToastrService) {
+    constructor(private shelfs: ShelfService, private toastrService: NbToastrService, private metaService: MetaService) {
         this.source = new LocalDataSource();
     }
 
@@ -78,32 +99,55 @@ export class ShelfsSettingsComponent implements OnInit {
     }
 
     onCreateConfirm(event):void {
-        this.shelfs.addShelf(event.newData).then(data => {
-            event.newData.shelf_id = data.shelf_id;
-            this.toastrService.success(data.message, 'Success')
+        const newData = event.newData;
+        this.shelfs.addShelf(newData).then(data => {
+            newData.id = data.shelf_id;
+            newData.link = '/shelf/' + data.shelf_id;
+            console.log('all ', this.shelfs.myShelfs);
+            console.log('new ', newData);
+            const settings = this.shelfs.myShelfs.pop();
+            this.shelfs.myShelfs.push(newData);
+            this.shelfs.myShelfs.push(settings);
+            newData.shelf_id = data.shelf_id;
+            this.toastrService.success(data.message, 'Success');
             event.confirm.resolve(event.newData);
         }).catch(err => {
-            this.toastrService.success(err, 'error')
+            this.toastrService.success(err, 'error');
             event.confirm.reject();
         });
     }
 
     onSaveConfirm(event):void {
-        this.shelfs.updateShelf(event.newData).then(data => {
-            this.toastrService.success(data.message, 'Success')
+        const newData = event.newData;
+        this.shelfs.updateShelf(newData).then(data => {
+            newData.id = newData.shelf_id;
+            for (const s in this.shelfs.myShelfs) {
+                if (this.shelfs.myShelfs[s].id === newData.shelf_id) {
+                    this.shelfs.myShelfs[s] = Object.assign({}, newData);
+                }
+            }
+            this.toastrService.success(data.message, 'Success');
             event.confirm.resolve();
         }).catch(err => {
-            this.toastrService.success(err, 'error')
+            this.toastrService.success(err, 'error');
             event.confirm.reject();
         });
     }
 
     onDeleteConfirm(event): void {
-        this.shelfs.deleteShelf(event.data).then(data => {
-            this.toastrService.success(data.message, 'Success')
+        const newData = event.data;
+        this.shelfs.deleteShelf(newData).then(data => {
+            for (const s in this.shelfs.myShelfs) {
+                if (this.shelfs.myShelfs[s].id === newData.shelf_id) {
+                    this.shelfs.myShelfs.splice(+s, 1);
+                    break;
+                }
+            }
+            console.log(this.shelfs.myShelfs);
+            this.toastrService.success(data.message, 'Success');
             event.confirm.resolve();
         }).catch(err => {
-            this.toastrService.success(err, 'error')
+            this.toastrService.success(err, 'error');
             event.confirm.reject();
         });
     }

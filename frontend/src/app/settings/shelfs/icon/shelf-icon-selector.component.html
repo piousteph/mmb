@@ -1,0 +1,8 @@
+<nb-card>
+  <nb-card-header>Choose icon for new shelf</nb-card-header>
+  <nb-card-body>
+    <div class="icon-container" *ngFor="let icon of icons">
+      <i class="m-icon {{ icon.value }}" (click)="selectMe(icon.value)"></i>
+    </div>
+  </nb-card-body>
+</nb-card>

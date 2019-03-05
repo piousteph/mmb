@@ -13,6 +13,8 @@ const APIUrl = environment.APIUrl;
 })
 export class ShelfService {
 
+  public myShelfs = [];
+
   constructor(private http: HttpClient) {}
 
   getShelfs(): Observable<Shelfs> {
@@ -30,14 +32,17 @@ export class ShelfService {
   addShelf(shelf: Shelf): Promise<any> {
     const href = APIUrl + '/shelf';
     const requestUrl = `${href}`;
-    return this.http.post(requestUrl, shelf).toPromise();
+    const newData = Object.assign({}, shelf);
+    delete newData.shelf_id;
+    return this.http.post(requestUrl, newData).toPromise();
   }
 
   updateShelf(shelf: Shelf): Promise<any> {
     const href = APIUrl + '/shelf/' + shelf.shelf_id;
     const requestUrl = `${href}`;
-    delete shelf.shelf_id;
-    return this.http.put(requestUrl, shelf).toPromise();
+    const newData = Object.assign({}, shelf);
+    delete newData.shelf_id;
+    return this.http.put(requestUrl, newData).toPromise();
   }
 
   deleteShelf(shelf: Shelf): Promise<any> {
@@ -45,5 +50,4 @@ export class ShelfService {
     const requestUrl = `${href}`;
     return this.http.delete(requestUrl).toPromise();
   }
-
 }

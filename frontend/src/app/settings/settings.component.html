@@ -3,10 +3,10 @@
 
     <nb-tabset>
       <nb-tab tabTitle="Users" *ngIf="auth.isAdmin()">
-        <mmb-users-settings></mmb-users-settings>
+        <mmb-users-settings *ngIf="metaService.isInitialized()"></mmb-users-settings>
       </nb-tab>
       <nb-tab tabTitle="Shelfs">
-        <mmb-shelfs-settings></mmb-shelfs-settings>
+        <mmb-shelfs-settings *ngIf="metaService.isInitialized()"></mmb-shelfs-settings>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Users, userType } from '../../models/user.model';
+import { Users } from '../../models/user.model';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
     selector: 'mmb-users-settings',
@@ -38,7 +39,8 @@ export class UsersSettingsComponent implements OnInit {
                 title: 'ID',
                 editable: false,
                 addable: false,
-                filter: false
+                filter: false,
+                width: '50px'
             },
             user: {
                 title: 'Nom',
@@ -51,24 +53,25 @@ export class UsersSettingsComponent implements OnInit {
             id_profile: {
                 title: 'Profile',
                 filter: false,
+                width: '150px',
                 editor: {
                     type: 'list',
                     config: {
-                        list: userType
+                        list: this.metaService.getProfiles()
                     }
                 },
                 valuePrepareFunction: (value) => {
                     if (value === '') {
                         return value;
                     } else {
-                        return userType.filter(function(item) { return +item.value === +value; })[0].title;
+                        return this.metaService.getProfiles().filter(function(item) { return +item.value === +value; })[0].title;
                     }
                 }
             }
         }
     };
 
-    constructor(private users: UserService, private toastrService: NbToastrService) {
+    constructor(private users: UserService, private toastrService: NbToastrService, private metaService: MetaService) {
         this.source = new LocalDataSource();
     }
 
@@ -89,30 +92,30 @@ export class UsersSettingsComponent implements OnInit {
     onCreateConfirm(event):void {
         this.users.addUser(event.newData).then(data => {
             event.newData.user_id = data.user_id;
-            this.toastrService.success(data.message, 'Success')
+            this.toastrService.success(data.message, 'Success');
             event.confirm.resolve(event.newData);
         }).catch(err => {
-            this.toastrService.success(err, 'error')
+            this.toastrService.success(err, 'error');
             event.confirm.reject();
         });
     }
 
     onSaveConfirm(event):void {
         this.users.updateUser(event.newData).then(data => {
-            this.toastrService.success(data.message, 'Success')
+            this.toastrService.success(data.message, 'Success');
             event.confirm.resolve();
         }).catch(err => {
-            this.toastrService.success(err, 'error')
+            this.toastrService.success(err, 'error');
             event.confirm.reject();
         });
     }
 
     onDeleteConfirm(event): void {
         this.users.deleteUser(event.data).then(data => {
-            this.toastrService.success(data.message, 'Success')
+            this.toastrService.success(data.message, 'Success');
             event.confirm.resolve();
         }).catch(err => {
-            this.toastrService.success(err, 'error')
+            this.toastrService.success(err, 'error');
             event.confirm.reject();
         });
     }

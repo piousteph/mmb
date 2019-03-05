@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
-import { shelfIconsList } from '../../models/shelf.model';
+import { shelfIconsList } from '../../../models/shelf.model';
 
 @Component({
-    template: `<i class="menu-icon {{ iconName }}"></i>`,
-    styles: [`:host .menu-icon { font-size: 1.5rem; }`]
+    template: `<i class="m-icon {{ iconName }}"></i>`,
+    styles: [`:host .m-icon { font-size: 24px; }`]
 })
 
-export class ShelfIconComponent implements OnInit, ViewCell {
+export class ShelfIconRenderComponent implements OnInit, ViewCell {
     iconName: string;
 
     @Input() value: string | number;

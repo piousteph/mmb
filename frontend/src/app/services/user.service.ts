@@ -28,14 +28,17 @@ export class UserService {
   addUser(user: User): Promise<any> {
     const href = APIUrl + '/user';
     const requestUrl = `${href}`;
-    return this.http.post(requestUrl, user).toPromise();
+    const newData = Object.assign({}, user);
+    delete newData.user_id;
+    return this.http.post(requestUrl, newData).toPromise();
   }
 
   updateUser(user: User): Promise<any> {
     const href = APIUrl + '/user/' + user.user_id;
     const requestUrl = `${href}`;
-    delete user.user_id;
-    return this.http.put(requestUrl, user).toPromise();
+    const newData = Object.assign({}, user);
+    delete newData.user_id;
+    return this.http.put(requestUrl, newData).toPromise();
   }
 
   deleteUser(user: User): Promise<any> {
