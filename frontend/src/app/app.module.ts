@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { getDeepFromObject } from '@nebular/auth/helpers';
@@ -12,7 +13,9 @@ import { NbThemeModule,
   NbRouteTabsetModule,
   NbTabsetModule,
   NbCardModule,
-  NbToastrModule } from '@nebular/theme';
+  NbToastrModule,
+  NbDialogModule,
+  NbInputModule } from '@nebular/theme';
 import { NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions, NbAuthJWTToken, NbAuthModule } from '@nebular/auth';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -30,9 +33,11 @@ import { ShelfsComponent } from './shelfs/shelfs.component';
 import { SettingsComponent } from './settings/settings.component';
 import { UsersSettingsComponent } from './settings/users/users-settings.component';
 import { ShelfsSettingsComponent } from './settings/shelfs/shelfs-settings.component';
-import { ShelfIconComponent } from './settings/shelfs/shelf-icon.component';
-import { ShelfIconEditorComponent } from './settings/shelfs/shelf-icon-editor.component';
+import { ShelfIconRenderComponent } from './settings/shelfs/icon/shelf-icon-render.component';
+import { ShelfIconEditorComponent } from './settings/shelfs/icon/shelf-icon-editor.component';
+import { ShelfIconSelectorComponent } from './settings/shelfs/icon/shelf-icon-selector.component';
 import { MediaComponent } from './shelfs/media/media.component';
+import { ProvidersComponent } from './providers/provider.component';
 
 @NgModule({
   declarations: [
@@ -43,17 +48,21 @@ import { MediaComponent } from './shelfs/media/media.component';
     SettingsComponent,
     UsersSettingsComponent,
     ShelfsSettingsComponent,
-    ShelfIconComponent,
+    ShelfIconRenderComponent,
     ShelfIconEditorComponent,
-    MediaComponent
+    ShelfIconSelectorComponent,
+    MediaComponent,
+    ProvidersComponent
   ],
   entryComponents: [
-    ShelfIconComponent,
-    ShelfIconEditorComponent
+    ShelfIconRenderComponent,
+    ShelfIconEditorComponent,
+    ShelfIconSelectorComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'corporate' }),
@@ -62,8 +71,10 @@ import { MediaComponent } from './shelfs/media/media.component';
     NbTabsetModule,
     NbRouteTabsetModule,
     NbCardModule,
+    NbInputModule,
     Ng2SmartTableModule,
     NbToastrModule.forRoot(),
+    NbDialogModule.forRoot(),
 
     NbAuthModule.forRoot({
       strategies: [

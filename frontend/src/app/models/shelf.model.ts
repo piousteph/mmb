@@ -1,15 +1,18 @@
 export class Shelf {
   public shelf_id: number;
   public shelf: string;
+  public provider: number;
   public icon: string;
 
   constructor(
     shelf_id: number,
     shelf: string,
+    provider: number,
     icon: string
   ) {
     this.shelf_id = shelf_id;
     this.shelf = shelf;
+    this.provider = provider;
     this.icon = icon;
   }
 }

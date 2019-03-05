@@ -1,5 +1,5 @@
 <ul class="menu-items">
-    <li class="menu-item" *ngFor='let item of data'>
+    <li class="menu-item" *ngFor='let item of shelf.myShelfs'>
         <a routerLink="{{ item.link }}" title="{{ item.shelf }}">
             <i class="menu-icon {{ item.icon }}"></i>
             <span class="menu-title">{{ item.shelf }}</span>

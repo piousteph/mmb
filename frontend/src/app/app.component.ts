@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  constructor(private auth: AuthService, private sidebarService: NbSidebarService, public router: Router) {}
+  constructor(private auth: AuthService, private sidebarService: NbSidebarService, public router: Router) { }
 
   toggle() {
     this.sidebarService.toggle(true);

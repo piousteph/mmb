@@ -25,18 +25,18 @@ export class MenuComponent implements OnInit {
 
   loadData() {
     this.shelf.getShelfs().subscribe((shelfs: Shelfs) => {
-      this.data = [];
+      this.shelf.myShelfs = [];
       shelfs.rows.forEach(shelf => {
-        this.data.push({
+        this.shelf.myShelfs.push({
           id: +shelf.shelf_id,
           shelf: shelf.shelf,
           icon: shelf.icon,
           link: '/shelf/' + shelf.shelf_id
         });
       });
-      this.data.push({
+      this.shelf.myShelfs.push({
         id: 0,
-        name: 'Configuration',
+        shelf: 'Configuration',
         icon: 'eva eva-settings-outline',
         link: '/settings'
       });

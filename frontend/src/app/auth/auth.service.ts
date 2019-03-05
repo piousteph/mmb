@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { UserLogged } from '../models/user.model';
 
+import { userType } from '../models/meta.model';
+import { MetaService } from '../services/meta.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,15 +14,16 @@ export class AuthService {
   private _isLogged = false;
   private _user: UserLogged;
 
-  constructor(private authService: NbAuthService) {
+  constructor(private authService: NbAuthService, private metaService: MetaService) {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
         this._user = token.getPayload();
         this._isLogged = true;
-        console.log('Logged')
+        metaService.initMeta();
+        console.log('Logged');
       } else {
         this._isLogged = false;
-        console.log('NOT Logged')
+        console.log('NOT Logged');
       }
     });
   }
