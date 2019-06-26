@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { UserLogged } from '../models/user.model';
-
-import { userType } from '../models/meta.model';
 import { MetaService } from '../services/meta.service';
 
 @Injectable({

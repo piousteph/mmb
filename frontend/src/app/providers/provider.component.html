@@ -1,0 +1,10 @@
+<nb-card>
+  <nb-card-header>Recherche de ...</nb-card-header>
+  <nb-card-body>
+        <input nbInput [(ngModel)]="input">
+        <button nbButton (click)="goSearch($event)">search</button>
+    <div *ngFor="let result of results">
+      {{ result.title }}
+    </div>
+  </nb-card-body>
+</nb-card>

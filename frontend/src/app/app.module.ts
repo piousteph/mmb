@@ -28,7 +28,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { MenuComponent } from './menu/menu.component'; 
+import { MenuComponent } from './menu/menu.component';
 import { ShelfsComponent } from './shelfs/shelfs.component';
 import { SettingsComponent } from './settings/settings.component';
 import { UsersSettingsComponent } from './settings/users/users-settings.component';
@@ -36,7 +36,10 @@ import { ShelfsSettingsComponent } from './settings/shelfs/shelfs-settings.compo
 import { ShelfIconRenderComponent } from './settings/shelfs/icon/shelf-icon-render.component';
 import { ShelfIconEditorComponent } from './settings/shelfs/icon/shelf-icon-editor.component';
 import { ShelfIconSelectorComponent } from './settings/shelfs/icon/shelf-icon-selector.component';
+
 import { MediaComponent } from './shelfs/media/media.component';
+import { MediaEditComponent } from './shelfs/media/media-edit/media-edit.component';
+
 import { ProvidersComponent } from './providers/provider.component';
 
 @NgModule({
@@ -52,12 +55,14 @@ import { ProvidersComponent } from './providers/provider.component';
     ShelfIconEditorComponent,
     ShelfIconSelectorComponent,
     MediaComponent,
+    MediaEditComponent,
     ProvidersComponent
   ],
   entryComponents: [
     ShelfIconRenderComponent,
     ShelfIconEditorComponent,
-    ShelfIconSelectorComponent
+    ShelfIconSelectorComponent,
+    MediaEditComponent
   ],
   imports: [
     HttpClientModule,
