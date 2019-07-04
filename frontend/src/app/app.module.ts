@@ -20,6 +20,8 @@ import { NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions, NbAuthJWTToken, 
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 import { JwtInterceptor } from './auth/jwt.interceptor';
@@ -80,6 +82,7 @@ import { ProvidersComponent } from './providers/provider.component';
     Ng2SmartTableModule,
     NbToastrModule.forRoot(),
     NbDialogModule.forRoot(),
+    LazyLoadImageModule,
 
     NbAuthModule.forRoot({
       strategies: [

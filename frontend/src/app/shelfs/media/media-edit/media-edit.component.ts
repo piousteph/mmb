@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Media } from '../../../models/media.model';
+import { environment } from 'src/environments/environment.prod';
+
+const IMGUrl = environment.IMGUrl;
 
 @Component({
     selector: 'mmb-media-edit',
@@ -7,11 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MediaEditComponent implements OnInit {
 
-    title: String = 'Kill Bill Vol.1';
-    extra: String = 'Uma Thurman, Lucy Liu, Vivica A. Fox, Daryl Hannah';
-    image: String = 'https://m.media-amazon.com/images/M/MV5BNzM3NDFhYTAtYmU5Mi00NGRmLTljYjgtMDkyODQ4MjNkMGY2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg';
+    @Input() media: Media;
+
+    name: String = '';
+    extra: String = '';
+    image: String = '';
 
     constructor() { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        console.log(this.media)
+        this.name = this.media.name;
+        this.extra = this.media.extra;
+        this.image = IMGUrl + this.media.media_id + '.jpg';
+    }
 }

@@ -1,6 +1,6 @@
 <div class="movie-container">
     <div class="movie">
-        <img class="movie-img" src="http://mmb.sylbohec.fr/covers/{{ media.media_id }}.jpg">
+        <img class="movie-img" [defaultImage]="defaultImage" [lazyLoad]="image">
     </div>
     <div class="text-movie-cont">
         <div class="mr-grid">

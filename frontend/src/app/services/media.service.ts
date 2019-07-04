@@ -34,14 +34,14 @@ export class MediaService {
   }
 
   updateMedia(shelf_id: number, media: Media): Promise<any> {
-    const href = APIUrl + '/shelf/' + shelf_id + '/' + media.item_id;
+    const href = APIUrl + '/shelf/' + shelf_id + '/' + media.media_id;
     const requestUrl = `${href}`;
-    delete media.item_id;
+    delete media.media_id;
     return this.http.put(requestUrl, media).toPromise();
   }
 
   deleteMedia(shelf_id: number, media: Media): Promise<any> {
-    const href = APIUrl + '/shelf/' + shelf_id + '/' + media.item_id;
+    const href = APIUrl + '/shelf/' + shelf_id + '/' + media.media_id;
     const requestUrl = `${href}`;
     return this.http.delete(requestUrl).toPromise();
   }

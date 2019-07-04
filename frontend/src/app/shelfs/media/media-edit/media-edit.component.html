@@ -1,17 +1,24 @@
-<div class="media">
-  <div class="media-poster">
-    <div class="media-poster-container">
-      <img src="http://mmb.sylbohec.fr/covers/{{ media_id }}.jpg" />
+<nb-card>
+  <nb-card-header>Edition</nb-card-header>
+  <nb-card-body class="media">
+    <div class="media-poster">
+      <div class="media-poster-container">
+        <img src="{{ image }}" />
+      </div>
     </div>
-  </div>
-  <div class="media-details">
-    <div class="media-title">
-        <h2>Title</h2>
+    <div class="media-details">
+      <div class="media-title">
+        <h2>Titre</h2>
         <input nbInput value="{{ name }}" fullWidth>
-    </div>
-    <div class="media-extras">
-        <h3>Extra informations</h3>
+      </div>
+      <div class="media-extras">
+        <h3>Informations</h3>
         <input nbInput value="{{ extra }}" fullWidth>
+      </div>
     </div>
-  </div>
-</div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton>Sauvegarder</button>
+    <button nbButton outline status="danger" size="tiny">Annuler</button>
+  </nb-card-footer>
+</nb-card>

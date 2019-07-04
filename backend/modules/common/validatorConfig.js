@@ -141,7 +141,7 @@ const userRouteValidator = {
     }, {
         name: 'password',
         in: 'body',
-        require: true,
+        require: false,
         shouldBe: {
             type: 'string',
             canBeEmpty: false

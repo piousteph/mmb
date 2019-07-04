@@ -1,19 +1,22 @@
 export class Media {
-  public item_id: number;
+  public media_id: number;
   public name: string;
+  public extra: string;
   public inferno: boolean;
   public date_created: Date;
   public date_lend: Date;
 
   constructor(
-    item_id: number,
+    media_id: number,
     name: string,
+    extra: string,
     inferno: boolean,
     date_created: Date,
     date_lend: Date
     ) {
-    this.item_id = item_id;
+    this.media_id = media_id;
     this.name = name;
+    this.extra = extra;
     this.inferno = inferno;
     this.date_created = date_created;
     this.date_lend = date_lend;

@@ -20,6 +20,9 @@ export class ShelfsSettingsComponent implements OnInit {
     data = [];
 
     settings = {
+        actions: {
+            position: 'right'
+        },
         add: {
             addButtonContent: '<i class="nb-plus"></i>',
             createButtonContent: '<i class="nb-checkmark"></i>',

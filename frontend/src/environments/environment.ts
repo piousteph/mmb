@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  APIUrl: 'http://127.0.0.1:3080'
+  APIUrl: 'http://127.0.0.1:3080',
+  IMGUrl: 'http://mmb.sylbohec.fr/covers/'
 };
 
 /*
